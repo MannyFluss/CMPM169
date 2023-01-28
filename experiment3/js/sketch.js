@@ -2,7 +2,7 @@ let x, y,weight;
 
 let c1,c2,c3;
 function setup() {
-  createCanvas(displayWidth, displayHeight);
+  createCanvas(displayWidth+100, displayHeight);
   background(255);
   stroke(255);
   rectMode(CENTER);
