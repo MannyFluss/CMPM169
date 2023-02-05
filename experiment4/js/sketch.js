@@ -9,7 +9,7 @@ function setup() {
   sortType = random([0,1,2,3]);
   text("loading... \nsort type : " + sortType , width/2,height/2 );
 }
-
+ 
 function draw() {
   if (img && sortType == 0) {
     image(img, 0, 0);
