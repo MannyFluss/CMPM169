@@ -1,67 +1,92 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
-
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
-
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
-
-// Globals
-let myInstance;
-let canvasContainer;
-
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
-
-    myMethod() {
-        // code to run when method is called
-    }
-}
-
-// setup() function is called once when the program starts
+let img;
+let sortType;
 function setup() {
-    // place our canvas, making it fit our container
-    canvasContainer = $("#canvas-container");
-    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-    canvas.parent("canvas-container");
-    // resize canvas is the page is resized
-    $(window).resize(function() {
-        console.log("Resizing...");
-        resizeCanvas(canvasContainer.width(), canvasContainer.height());
-    });
-    // create an instance of the class
-    myInstance = new MyClass(VALUE1, VALUE2);
-
-    var centerHorz = windowWidth / 2;
-    var centerVert = windowHeight / 2;
+  
+  createCanvas(windowWidth, windowHeight);
+  loadImage("https://source.unsplash.com/random/"+ String(width)+"x"+String(height), function(image) {
+    img = image;
+  });
+  sortType = random([0,1,2,3]);
+  text("loading... \nsort type : " + sortType , width/2,height/2 );
 }
 
-// draw() function is called repeatedly, it's the main animation loop
 function draw() {
-    background(220);    
-    // call a method on the instance
-    myInstance.myMethod();
-
-    // Put drawings here
-    var centerHorz = canvasContainer.width() / 2 - 125;
-    var centerVert = canvasContainer.height() / 2 - 125;
-    fill(234, 31, 81);
-    noStroke();
-    rect(centerHorz, centerVert, 250, 250);
-    fill(255);
-    textStyle(BOLD);
-    textSize(140);
-    text("p5*", centerHorz + 10, centerVert + 200);
-}
-
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+  if (img && sortType == 0) {
+    image(img, 0, 0);
+    img.loadPixels();
+    for (let i = 0; i< img.pixels.length; i ++)
+      {
+        if (img.pixels[i] < img.pixels[i+1])
+        {
+          let temp = img.pixels[i+1];
+          img.pixels[i + 1] = img.pixels[i];
+          img.pixels[i] = temp;
+        }
+      }
+    img.updatePixels()
+  }
+  
+  if (img && sortType == 1)
+  {
+    image(img,0,0);
+    img.loadPixels();
+    
+    for (let i = img.pixels.length-1;i>0;i--)
+    {
+      if (img.pixels[i] > img.pixels[i-1])
+      {
+          let temp = img.pixels[i-1];
+          img.pixels[i - 1] = img.pixels[i];
+          img.pixels[i] = temp;
+      }
+    }
+    img.updatePixels();
+    
+    ///
+    
+    ///
+    
+  }
+  if (img && sortType == 2)
+  {
+    image(img,0,0);
+    img.loadPixels();
+    let num1 = 2;
+    let num2 = 1;
+    ////
+    for (let i = img.pixels.length-1;i>0;i--)
+    {
+      if (img.pixels[i] > img.pixels[i-num1])
+      {
+          let temp = img.pixels[i-num2];
+          img.pixels[i - num2] = img.pixels[i];
+          img.pixels[i] = temp;
+      }
+    }
+    img.updatePixels();
+    ////
+  }
+  if (img && sortType == 3)
+  {
+    image(img,0,0);
+    img.loadPixels();
+    let num1 = 1;
+    let num2 = 2;
+    ////
+    for (let i = img.pixels.length-1;i>0;i--)
+    {
+      if (img.pixels[i] > img.pixels[i-num1])
+      {
+          let temp = img.pixels[i-num2];
+          img.pixels[i - num2] = img.pixels[i];
+          img.pixels[i] = temp;
+      }
+    }
+    img.updatePixels();
+    ////
+  }
+  
+  
+  
+  
 }
