@@ -59,7 +59,145 @@
 
 			<div class="minor-section">
 				<h2>Results</h2>
-				<div id="canvas-container">
+				<div>
+					<head>
+						<!--Load the AJAX API-->
+						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+						<script type="text/javascript">
+					
+						  // Load the Visualization API and the corechart package.
+						  google.charts.load('current', {'packages':['corechart','bar']});
+					
+						  // Set a callback to run when the Google Visualization API is loaded.
+						  google.charts.setOnLoadCallback(drawChart);
+					
+						  // Callback that creates and populates a data table,
+						  // instantiates the pie chart, passes in the data and
+						  // draws it.
+
+						  var timesCoinFlipped = 1;
+						  var headsCount = 1;
+						  var tailsCount = 1;
+						  var timeElapsed = 30.0;
+						  var intervalID = setInterval(drawTheEntityApproaching,1000);
+						  function drawTheEntityApproaching()
+						  {
+							if (timeElapsed)
+							timeElapsed = timeElapsed - 1;
+							console.log(timeElapsed);
+							//the entity will keep approaching unless you keep flipping coins
+							var data =  google.visualization.arrayToDataTable([
+								['Time you have left','The Entity is Approaching','evil'],
+								['Time Left', timeElapsed + timesCoinFlipped,10],
+								['Amount of Time Borrowed', timesCoinFlipped,10],
+							]);
+								var options = {
+									title: 'The Entity is Approaching',
+									hAxis: {title: 'Resistance is Futile'},
+									vAxis: {title: 'Time Left'},
+									bubble: {textStyle: {fontSize: 15}}
+								};
+							var chart = new google.visualization.BubbleChart(document.getElementById('entityApproaching_div'));
+ 							chart.draw(data, options);
+						  }
+
+						  function drawCookieClicker()
+						  {
+							var data = google.visualization.arrayToDataTable([
+								['Things','Amount of Things'],
+								['The first number', timesCoinFlipped/headsCount],
+								['the second number', headsCount * tailsCount],
+								['the third number', tailsCount * timesCoinFlipped]
+							]);
+							var options = {'title':'I accidentally made cookie Clicker here are some more numbers',
+										   'width':400,
+										   'height':300};
+							var chart = new google.visualization.AreaChart(document.getElementById('area_chart'));
+  							chart.draw(data, options);			   
+						  }
+
+						  
+						  function drawChart() {
+					
+							// Create the data table.
+							var data = new google.visualization.DataTable();
+							
+							data.addColumn('string', 'Topping');
+							data.addColumn('number', 'Slices');
+							data.addRows([
+							  ['Heads', headsCount],
+							  ['Tails', tailsCount],
+							]);
+					
+							var data2 = google.visualization.arrayToDataTable([
+								['Things','Amount of Things'],
+								['CoinsFlipped', timesCoinFlipped],
+								['Heads', headsCount],
+								['Tails', tailsCount]
+							]);
+							var options2 = {'title': 'heads vs tails vs times flipped. Which will be the most?',
+											'width':1000,'height':400}
+
+							// Set chart options
+							var options = {'title':'Heads VS Tails',
+										   'width':400,
+										   'height':300};
+					
+							// Instantiate and draw our chart, passing in some options.
+							var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+							chart.draw(data, options);
+							var chart2 = new google.charts.Bar(document.getElementById('bar_div'));
+							chart2.draw(data2,options2);
+
+						  }
+
+						  function createPopUp()
+						  {
+							var myPopup = window.open("https://www.scaryforkids.com/", "I am approaching", "width=600,height=400");
+						  }
+						  
+						  var scaryWebsiteFlag = true;
+						  function flipCoin()
+						  {
+							console.log(timeElapsed + timesCoinFlipped);
+
+							if (timeElapsed + timesCoinFlipped <= 15 && scaryWebsiteFlag)
+							{
+								scaryWebsiteFlag = false;
+								createPopUp();
+							}
+
+							drawChart();//idk why but this has to be before the other things
+							drawCookieClicker();
+							timesCoinFlipped += 1;
+							var randomNumber = Math.random();
+  
+							// If the number is less than 0.5, it's heads (or true)
+							if (randomNumber < 0.5) {
+								return headsCount += 1;
+							}
+							// Otherwise, it's tails (or false)
+							else {
+								return tailsCount += 1;
+							}		
+							
+
+						  }
+						</script>
+					  </head>
+					
+					  <body>
+						<!--Div that will hold the pie chart-->
+						<div id="chart_div"></div>
+						<div id="bar_div"></div>
+						<div id="entityApproaching_div"></div>
+						<div id="area_chart"></div>
+						<button onclick="flipCoin()">Flip A Coin</button>
+					  </body>
+
+
+
+
 					<!-- canvas will be added here -->
 				</div>
 			</div>
