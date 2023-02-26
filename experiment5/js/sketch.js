@@ -1,67 +1,46 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
-
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
-
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
-
-// Globals
-let myInstance;
-let canvasContainer;
-
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
-
-    myMethod() {
-        // code to run when method is called
-    }
-}
-
-// setup() function is called once when the program starts
+let c1,c2,c3
 function setup() {
-    // place our canvas, making it fit our container
-    canvasContainer = $("#canvas-container");
-    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-    canvas.parent("canvas-container");
-    // resize canvas is the page is resized
-    $(window).resize(function() {
-        console.log("Resizing...");
-        resizeCanvas(canvasContainer.width(), canvasContainer.height());
-    });
-    // create an instance of the class
-    myInstance = new MyClass(VALUE1, VALUE2);
-
-    var centerHorz = windowWidth / 2;
-    var centerVert = windowHeight / 2;
+  angleMode(DEGREES)
+  createCanvas(800, 800,WEBGL);
+  c1 = floor(random(155, 256));
+  c2 = floor(random(155, 256));
+  c3 = floor(random(155, 256));
 }
 
-// draw() function is called repeatedly, it's the main animation loop
-function draw() {
-    background(220);    
-    // call a method on the instance
-    myInstance.myMethod();
+let angle = 0.0;
 
-    // Put drawings here
-    var centerHorz = canvasContainer.width() / 2 - 125;
-    var centerVert = canvasContainer.height() / 2 - 125;
-    fill(234, 31, 81);
-    noStroke();
-    rect(centerHorz, centerVert, 250, 250);
-    fill(255);
-    textStyle(BOLD);
-    textSize(140);
-    text("p5*", centerHorz + 10, centerVert + 200);
+function draw()
+{
+  translate(0,-100,0)
+  background('lightblue')
+  ambientLight(100, 100, 100);
+  pointLight(100, 100, 100, -100, 10, 10);
+  rotateZ(0)
+  rotateX(-30)
+  rotateY(angle)
+  
+  building(50,50,50)
+  translate(0,250,0)
+  ambientMaterial('brown');
+  specularMaterial('brown');
+  cylinder(100,10,100)
+  angle += 0.5;
 }
+function building(x,y,buildingHeight)
+{
+  noStroke()
 
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+  for (let i = 0.0;i<buildingHeight;i+=1)
+  {
+    //fill(c1,c2,c3)
+    ambientMaterial(c1,c2,c3);
+    specularMaterial(200,200,200);
+    shininess(0.5);
+    push()
+    let temp = noise(x,y,i);
+    let width = map(temp,0,1,5,100)
+    translate(0,i*5,0);
+    box(width + i/5,5,width + i/5)
+    pop()
+  }
 }

@@ -2,11 +2,12 @@ let x, y,weight;
 
 let c1,c2,c3;
 function setup() {
-  createCanvas(displayWidth+100, displayHeight);
+  createCanvas(displayWidth, displayHeight);
   background(255);
   stroke(255);
   rectMode(CENTER);
-  
+
+
   c1 = random(155,255)
   c2 = random(155,255)
   c3 = random(155,255)
@@ -38,5 +39,6 @@ function building(x,y,buildingHeight)
     square(x,y+i,w - i/5)  
     pop()
   }
+  background(255,255,255,.05)
 }
 
